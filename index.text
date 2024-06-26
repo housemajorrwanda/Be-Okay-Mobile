@@ -18,3 +18,5 @@ npx expo prebuild
 npm start
 
 npx expo start -c
+
+
