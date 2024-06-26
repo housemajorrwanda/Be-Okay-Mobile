@@ -1,0 +1,20 @@
+# Step 1: Delete node_modules and reinstall dependencies
+rm -rf node_modules
+npm install
+
+# Step 2: Clean npm cache
+npm cache clean --force
+
+# Step 3: Install missing module
+npm install qrcode-terminal
+
+# Step 4: Ensure expo-cli is installed
+npm install -g expo-cli
+
+# Step 5: Regenerate native directories with URI schemes
+npx expo prebuild
+
+# Step 6: Start the project
+npm start
+
+npx expo start -c
