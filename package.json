@@ -1,0 +1,25 @@
+{
+  "name": "be-okay-mobile",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@types/react": "~18.2.79",
+    "expo": "~51.0.14",
+    "expo-router": "^3.5.16",
+    "expo-status-bar": "~1.12.1",
+    "ora": "^8.0.1",
+    "qrcode-terminal": "^0.12.0",
+    "react": "18.2.0",
+    "react-native": "0.74.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}

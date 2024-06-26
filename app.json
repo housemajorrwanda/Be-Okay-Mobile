@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Be-Okay-Mobile",
+    "slug": "Be-Okay-Mobile",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.house_major.BeOkayMobile"
+    },
+    "ios": {
+      "bundleIdentifier": "1"
+    },
+    "scheme": "beokaymobile"
+  },
+  "name": "Be-Okay-Mobile"
+}
