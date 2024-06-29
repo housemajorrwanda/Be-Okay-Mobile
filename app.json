@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "Be-Okay-Mobile",
-    "slug": "Be-Okay-Mobile",
+    "name": "host",
+    "slug": "host",
     "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "946452f4-fb79-4749-9f40-67d965854055"
+      }
+    },
     "android": {
-      "package": "com.house_major.BeOkayMobile"
-    },
-    "ios": {
-      "bundleIdentifier": "1"
-    },
-    "scheme": "beokaymobile"
+      "package": "com.muhayimana_ambroise123.host"
+    }
   },
-  "name": "Be-Okay-Mobile"
+  "name": "host"
 }

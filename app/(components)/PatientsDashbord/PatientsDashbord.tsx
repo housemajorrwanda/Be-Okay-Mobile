@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,17 +6,24 @@ import {
   Image,
   ScrollView,
   Pressable,
+  Alert
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import DatePicker from "react-native-modern-datepicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { Calendar } from "react-native-calendars";
+import { useNavigation } from "@react-navigation/native";
+import {NavigationProps} from "../../(app)/types"
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import BottomTabs1 from "../ReusableComponent/BottomTabs1";
+import Header1 from "../ReusableComponent/Header1";
 
 const PatientDashboard = () => {
+  const navigation = useNavigation<NavigationProps>()
   const [currentScreen, setCurrentScreen] = useState("appointment");
-  const [selectedDate, setSelectedDate] = useState("");
-
   const patientData = [
     {
       title: "Blood Group",
@@ -37,35 +44,14 @@ const PatientDashboard = () => {
       backgroundColor: "#AED9F1",
     },
     {
-      title: "Treatment Group",
+      title: "Treatment",
       image: require("../assets/medicine.png"),
       group: "Paracetamol",
       backgroundColor: "#97C496",
     },
   ];
 
-  const patientService = [
-    {
-      title: "Checkup",
-      image: require("../assets/checkup.png"),
-      price: "Price: 800 Rwf",
-      backgroundColor: "#67C3AC",
-    },
-    {
-      title: "Consultation",
-      image: require("../assets/Homecare.png"),
-      price: "Price: 800 Rwf",
-      backgroundColor: "#F6E1E1",
-    },
-    {
-      title: "Homecare",
-      image: require("../assets/Consultation.png"),
-      price: "Price: 20000 Rwf",
-      backgroundColor: "#97C496",
-    },
-  ];
-
-  const handleNavigate = (screen) => {
+  const handleNavigate = (screen: React.SetStateAction<string>) => {
     if (screen !== "calendar") {
       setCurrentScreen("appointment");
     } else {
@@ -73,30 +59,23 @@ const PatientDashboard = () => {
     }
   };
 
+  const handlePress = async (type) => {
+    try {
+      await AsyncStorage.setItem('selectedOption', type);
+      console.log(`Selected option: ${type}`);
+    navigation.navigate("ChatBoxConsultationBodyImagemapping");
+    } catch (error) {
+      Alert.alert("Error", "Failed to save data");
+      console.error(error);
+    }
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <View style={styles.header}>
-          <View>
-            <Image
-              source={require("../assets/profileImage.png")}
-              style={styles.profileImage}
-            />
-            <View style={styles.activeIcon} />
-          </View>
-          <View style={styles.profileDetails}>
-            <Text style={styles.profileName}>NGOGA Innocent</Text>
-            <Text style={styles.secondName}>Patrick</Text>
-          </View>
-          <View style={styles.headerIcons}>
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={30}
-              color="white"
-            />
-            <Ionicons name="notifications-sharp" size={30} color="white" />
-          </View>
-        </View>
+    <View style={{ flex: 1 }}>
+      <View style={styles.header}>
+        <Header1 />
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.healthStatusText}>
           <Text style={styles.healthStatus}>Health Status</Text>
           <Text style={styles.last30days}>last 30 days</Text>
@@ -132,24 +111,48 @@ const PatientDashboard = () => {
             <Text style={styles.lookingFortext}>What are you looking for?</Text>
           </View>
           <View style={styles.patientDataContainer}>
-            {patientService.map((item, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.patientDataResultContainer,
-                  { backgroundColor: item.backgroundColor },
-                ]}
-              >
-                <Text style={styles.resultTitle}>{item.title}</Text>
+            <Pressable onPress={() => handlePress("checkup")}>
+              <View style={styles.patientDataResultContainer}>
+                <Text style={styles.resultTitle}>Checkup</Text>
                 <View style={styles.PatientDataGroup}>
-                  <Image source={item.image} style={styles.patientDataImage} />
+                  <Image
+                    source={require("../assets/checkup.png")}
+                    style={styles.patientDataImage}
+                  />
                   <View style={styles.patientDataPrice}>
-                    <Text style={styles.Price}>{item.price}</Text>
+                    <Text style={styles.Price}>Price: 800 Rwf</Text>
                   </View>
                 </View>
-                <View />
               </View>
-            ))}
+            </Pressable>
+            <Pressable onPress={() => handlePress("consultation")}>
+              <View style={styles.patientDataResultContainer}>
+                <Text style={styles.resultTitle}>Consultation</Text>
+                <View style={styles.PatientDataGroup}>
+                  <Image
+                    source={require("../assets/Doctorcons.png")}
+                    style={styles.patientDataImage}
+                  />
+                  <View style={styles.patientDataPrice}>
+                    <Text style={styles.Price}>Price: 4000 Rwf</Text>
+                  </View>
+                </View>
+              </View>
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate("HomeCare")}>
+              <View style={styles.patientDataResultContainer}>
+                <Text style={styles.resultTitle}>Home care</Text>
+                <View style={styles.PatientDataGroup}>
+                  <Image
+                    source={require("../assets/Homecare.png")}
+                    style={styles.patientDataImage}
+                  />
+                  <View style={styles.patientDataPrice}>
+                    <Text style={styles.Price}>Price: 20000 Rwf</Text>
+                  </View>
+                </View>
+              </View>
+            </Pressable>
           </View>
           <View style={styles.AppointmentSchedule}>
             <View>
@@ -195,156 +198,134 @@ const PatientDashboard = () => {
             </View>
           </View>
           {currentScreen === "appointment" && (
-            <View>
-              <View style={styles.appointmentScreen}>
-                <View style={styles.dateAndmonth}>
-                  <Text style={styles.febdate}>12</Text>
-                  <Text style={styles.febdate}>Feb</Text>
-                </View>
-                <View>
-                  <Text style={styles.date}>15 June 2024 | 2:00 PM </Text>
-                  <Text style={styles.statusNames}>Dr. Issa </Text>
-                </View>
-                <View>
-                  <View style={styles.Icons}>
-                    <View>
-                      <MaterialIcons
-                        name="phone-iphone"
-                        style={styles.checkIcon}
+              <View>
+                <View style={styles.appointmentScreen}>
+                  <View style={styles.dateAndmonth}>
+                    <Text style={styles.febdate}>12</Text>
+                    <Text style={styles.febdate}>Feb</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.date}>15 June 2024 | 2:00 PM </Text>
+                    <Text style={styles.statusNames}>Dr. Issa </Text>
+                  </View>
+                  <View>
+                    <View style={styles.Icons}>
+                      <View>
+                        <MaterialIcons
+                          name="phone-iphone"
+                          style={styles.checkIcon}
+                        />
+                      </View>
+                      <Image
+                        source={require("../assets/check-money.png")}
+                        style={styles.Checkup}
                       />
                     </View>
-                    <Image
-                      source={require("../assets/check-money.png")}
-                      style={styles.Checkup}
-                    />
+                    <Pressable style={styles.joinText} onPress={()=>{
+                      navigation.navigate("ConsultationTypeResult")
+                    }}>
+                      <Text style={styles.join}>Join</Text>
+                    </Pressable>
                   </View>
-                  <Pressable style={styles.joinText}>
-                    <Text style={styles.join}>Join</Text>
-                  </Pressable>
                 </View>
-              </View>
 
-              <View style={styles.appointmentScreen}>
-                <View style={styles.dateAndmonth}>
-                  <Text style={styles.febdate}>12</Text>
-                  <Text style={styles.febdate}>Feb</Text>
-                </View>
-                <View>
-                  <Text style={styles.date}>15 June 2024 | 2:00 PM </Text>
-                  <Text style={styles.statusNames}>Dr. Issa </Text>
-                </View>
-                <View>
-                  <View style={styles.Icons}>
-                    <View>
-                      <MaterialIcons
-                        name="phone-iphone"
-                        style={styles.checkIcon}
+                <View style={styles.appointmentScreen}>
+                  <View style={styles.dateAndmonth}>
+                    <Text style={styles.febdate}>12</Text>
+                    <Text style={styles.febdate}>Feb</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.date}>15 June 2024 | 2:00 PM </Text>
+                    <Text style={styles.statusNames}>Dr. Issa </Text>
+                  </View>
+                  <View>
+                    <View style={styles.Icons}>
+                      <View>
+                        <MaterialIcons
+                          name="phone-iphone"
+                          style={styles.checkIcon}
+                        />
+                      </View>
+                      <Image
+                        source={require("../assets/check-money.png")}
+                        style={styles.Checkup}
                       />
                     </View>
-                    <Image
-                      source={require("../assets/check-money.png")}
-                      style={styles.Checkup}
-                    />
+                    <Pressable style={styles.joinText}>
+                      <Text style={styles.join}>Join</Text>
+                    </Pressable>
                   </View>
-                  <Pressable style={styles.joinText}>
-                    <Text style={styles.join}>Join</Text>
-                  </Pressable>
                 </View>
-              </View>
-              <View style={styles.appointmentScreen}>
-                <View style={styles.dateAndmonth}>
-                  <Text style={styles.febdate}>12</Text>
-                  <Text style={styles.febdate}>Feb</Text>
-                </View>
-                <View>
-                  <Text style={styles.date}>15 June 2024 | 2:00 PM </Text>
-                  <Text style={styles.statusNames}>Dr. Issa </Text>
-                </View>
-                <View>
-                  <View style={styles.Icons}>
-                    <View>
-                      <MaterialIcons
-                        name="phone-iphone"
-                        style={styles.checkIcon}
+                
+                <View style={styles.appointmentScreen}>
+                  <View style={styles.dateAndmonth}>
+                    <Text style={styles.febdate}>12</Text>
+                    <Text style={styles.febdate}>Feb</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.date}>15 June 2024 | 2:00 PM </Text>
+                    <Text style={styles.statusNames}>Dr. Issa </Text>
+                  </View>
+                  <View>
+                    <View style={styles.Icons}>
+                      <View>
+                        <MaterialIcons
+                          name="phone-iphone"
+                          style={styles.checkIcon}
+                        />
+                      </View>
+                      <Image
+                        source={require("../assets/check-money.png")}
+                        style={styles.Checkup}
                       />
                     </View>
-                    <Image
-                      source={require("../assets/check-money.png")}
-                      style={styles.Checkup}
-                    />
+                    <Pressable style={styles.joinText}>
+                      <Text style={styles.join}>Join</Text>
+                    </Pressable>
                   </View>
-                  <Pressable style={styles.joinText}>
-                    <Text style={styles.join}>Join</Text>
-                  </Pressable>
                 </View>
               </View>
-            </View>
-          )}
+            )}
           {currentScreen === "calendar" && (
             <View style={styles.calendarScreen}>
-              <DatePicker
-                mode="calendar"
-                selected={selectedDate}
-                onDateChange={(date) => setSelectedDate(date)}
-                options={{
-                  backgroundColor: "#E8FFCF",
-                  textHeaderColor: "#8E9E7B",
-                  textDefaultColor: "#69695D",
-                  selectedTextColor: "#FFFFFF",
-                  mainColor: "#93BD68",
-                  textSecondaryColor: "#69695D",
-                  borderColor: "rgba(122, 146, 165, 0.1)",
-                  textFontSize:16,
-                  
+              <Calendar
+                onDayPress={(day) => {
+                  // Handle calendar day press
                 }}
-                current="2024-06-23"
+                markedDates={{
+                  "2024-06-15": {
+                    selected: true,
+                    marked: true,
+                    selectedColor: "blue",
+                  },
+                  "2024-06-16": { marked: true },
+                  "2024-06-21": {
+                    marked: true,
+                    dotColor: "red",
+                    activeOpacity: 0,
+                  },
+                  "2024-06-22": { disabled: true, disableTouchEvent: true },
+                }}
               />
-              {selectedDate && (
-                <Text style={styles.selectedDateText}>
-                  Selected Date: {selectedDate}
-                </Text>
-              )}
             </View>
           )}
-          <View style={styles.bottomNavigation}>
-            <Pressable onPress={() => handleNavigate("home")}>
-              <MaterialIcons name="home" size={24} color="#93BD68" />
-              <Text style={styles.navText}>Home</Text>
-            </Pressable>
-            <Pressable onPress={() => handleNavigate("consultation")}>
-              <MaterialCommunityIcons
-                name="stethoscope"
-                size={24}
-                color="#93BD68"
-              />
-              <Text style={styles.navText}>Consultation</Text>
-            </Pressable>
-            <Pressable onPress={() => handleNavigate("others")}>
-              <MaterialIcons name="more-horiz" size={24} color="#93BD68" />
-              <Text style={styles.navText}>Others</Text>
-            </Pressable>
-          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <BottomTabs1 activeTab="Home" />
+    </View>
   );
 };
 
 export default PatientDashboard;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
+
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 50, 
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#93BD68",
-    padding: 10,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    zIndex: 1,
+    marginBottom: 100,
   },
   profileImage: {
     width: 75,
@@ -394,7 +375,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   healthStatus: {
-    color: "#000000",
+    color: "#000000",  flex: 1,
   },
   last30days: {
     color: "#CCCCCC",
@@ -427,7 +408,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
     color: "white",
     fontSize: 10,
-    fontWeight: "medium",
+    fontWeight: "bold",
     textAlign: "center",
     paddingTop: 2,
     paddingBottom: 2,
@@ -475,7 +456,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 12,
     borderColor: "#cccc",
-    backgroundColor: "black",
+    backgroundColor: "#CFDEFF",
   },
   patientDataImage: {
     width: 60,
@@ -496,6 +477,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     marginBottom: 3,
   },
+
   patientDataContainer: {
     width: "100%",
     paddingLeft: 15,
@@ -553,19 +535,12 @@ const styles = StyleSheet.create({
   calendarScreen: {
     marginTop: 20,
     marginBottom: 20,
-    padding: 20,
-    backgroundColor: "#E8FFCF",
-    borderRadius: 16,
+    // padding: 20,
+    backgroundColor: "#ffff",
     marginHorizontal: 20,
-  },
-  bottomNavigation: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
+    borderWidth:1,
+    elevation:1,
+    borderColor:"#cccc",
   },
   navText: {
     fontSize: 12,
@@ -634,7 +609,7 @@ const styles = StyleSheet.create({
   selectedDateText: {
     fontSize: 16,
     color: "#4E6B58",
-    textAlign:'center'
+    textAlign: "center",
   },
 
   button: {
