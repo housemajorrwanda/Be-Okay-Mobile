@@ -9,7 +9,12 @@
     "ios": {
       "bundleIdentifier": "1"
     },
-    "scheme": "beokaymobile"
+    "scheme": "beokaymobile",
+    "extra": {
+      "eas": {
+        "projectId": "5b0d5e02-a0fb-493b-b85d-d5a1c246173f"
+      }
+    }
   },
   "name": "Be-Okay-Mobile"
 }
