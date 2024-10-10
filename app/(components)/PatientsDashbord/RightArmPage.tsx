@@ -4,11 +4,28 @@ import { AntDesign } from "@expo/vector-icons";
 import Header1 from "../ReusableComponent/Header1";
 import BottomTabs1 from "../ReusableComponent/BottomTabs1";
 import { useNavigation } from "@react-navigation/native";
-import {NavigationProps} from "../../(app)/types"
+import {NavigationProps} from "../../(app)/types";
+import ConsultationOptions from "./ConsultationOptions";
+
+
 const RightArmPage = () => {
   const navigation = useNavigation<NavigationProps>()
+  const [activeTab, setActiveTab] = useState('Home');
   const navigateToBack = () => {
     navigation.navigate("ChatBoxConsultationBodyImagemapping");
+  };
+
+  const navigateToConsultation = (bodyPart) => {
+    navigation.navigate("Consultation", { selectedBodyPart: bodyPart });
+  };
+
+  const handleOptionSelected = (option) => {
+    navigation.navigate("Consultation", {
+      selectedConsultation: {
+        title: option.fullName,
+        image: option.image
+      }
+    });
   };
 
 
@@ -16,29 +33,7 @@ const RightArmPage = () => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Header1/>
-        <View style={styles.SupDeseasesContainer}>
-          <Text style={styles.addressConsultation}>Address your Consultation </Text>
-          <View style={styles.DeseasesContainer}>
-            <View style={styles.subDeseasesContainer}>
-              <View>
-                <Text>Unknown</Text>
-              </View>
-              <View>
-                <Text>Respiratory</Text>
-              </View>
-              <View>
-                <Text>Med. Interne</Text>
-              </View>
-              <View>
-                <Text>Pediatry</Text>
-              </View>
-            </View>
-            <View style={styles.ViewAll}>
-              <Text>View All</Text>
-            </View>
-          </View>
-        </View>
-
+          <ConsultationOptions onOptionSelected={handleOptionSelected} />
         <View>
           <TouchableOpacity onPress={navigateToBack} style={styles.backButton}>
             <AntDesign name="arrowleft" style={styles.backButtonText} />
@@ -49,17 +44,29 @@ const RightArmPage = () => {
               <Image source={require("../assets/RightArm.png")}/>
             </View>
             <View style={styles.detailOptionContainer}>
-              <TouchableOpacity style={styles.detailOption}>
+              <TouchableOpacity onPress={() => navigateToConsultation('Right Injury')} style={styles.detailOption}>
+                 <View style={styles.circleImage}>
+                        <Image source={require("../assets/Injury-arm.png")} style={styles.organImage} />
+                  </View>
                 <Text style={styles.detailOptionText}>Injury</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <Text style={styles.detailOptionText}>Skin illness</Text>
+              <TouchableOpacity onPress={() => navigateToConsultation('Right elbow injury')} style={styles.detailOption}>
+                  <View style={styles.circleImage}>
+                        <Image source={require("../assets/elbow.png")} style={styles.organImage} />
+                  </View>
+                <Text style={styles.detailOptionText}>Elbow Injury</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <Text style={styles.detailOptionText}>Bursitis</Text>
+              <TouchableOpacity onPress={() => navigateToConsultation('Right Elbow Pain')} style={styles.detailOption}>
+                  <View style={styles.circleImage}>
+                          <Image source={require("../assets/elbow-pain.png")} style={styles.organImage} />
+                  </View>
+                <Text style={styles.detailOptionText}>Elbow Pain</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <Text style={styles.detailOptionText}>Others</Text>
+              <TouchableOpacity onPress={() => navigateToConsultation('Right Skin Rashes')} style={styles.detailOption}>
+                  <View style={styles.circleImage}>
+                        <Image source={require("../assets/skinrashes.png")} style={styles.organImage} />
+                  </View>
+                <Text style={styles.detailOptionText}>Skin Rashes</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -156,19 +163,10 @@ const styles = StyleSheet.create({
     gap: 10,
     padding: 5,
     marginBottom: 10,
-    alignItems:"center",
-    backgroundColor:"#93BD68",
-    width:135,
-    borderRadius:30,
-    height:36,
-    paddingLeft:15,
-
+    alignItems: "center",
+    
   },
-  detailOptionText: {
-    color:"white",
-    fontSize:14,
-    fontWeight:'regular',
-  },
+  detailOptionText: {},
   DeseasesContainer: {
     display: "flex",
     flexDirection: "column",
@@ -235,10 +233,26 @@ const styles = StyleSheet.create({
   
   },
   
-  DeseasesImage:{
-width:36,
-height:36
-}
+ DeseasesImage:{
+  width:36,
+  height:36
+},
+organImage: {
+  width: 30,
+  height: 30,
+  resizeMode: 'contain',
+  alignItems: 'center',
+},
+
+circleImage: {
+  width: 50,
+  height: 50,
+  borderRadius: 25,  
+  borderColor: 'grey',
+  borderWidth: 0.5,
+  justifyContent: 'center',  
+  alignItems: 'center',       
+},
 
 });
 

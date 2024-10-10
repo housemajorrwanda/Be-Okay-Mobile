@@ -2,95 +2,90 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
 import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons"; 
 import BottomTabs1 from "../ReusableComponent/BottomTabs1";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 import Header1 from "../ReusableComponent/Header1";
+import {NavigationProps} from "../../(app)/types";
+import ConsultationOptions from "./ConsultationOptions";
+
+
 const NeckChest = () => {
+  // const navigation = useNavigation<NavigationProps>()
+  const [activeTab, setActiveTab] = useState('Home');
   const navigateToBack = () => {
-    useNavigation.navigate("ChatBoxConsultationBodyImagemapping");
+    navigation.navigate("ChatBoxConsultationBodyImagemapping");
+  };
+
+  const navigateToConsultation = (bodyPart) => {
+    navigation.navigate("Consultation", { selectedBodyPart: bodyPart });
+  };
+
+  const handleOptionSelected = (option) => {
+    navigation.navigate("Consultation", {
+      selectedConsultation: {
+        title: option.fullName,
+        image: option.image
+      }
+    });
   };
 
 
-  const NavigateConsultation=()=>{
-    useNavigation.navigate("Consultation")
-  }
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Header1/>
-
-
-        <View style={styles.SupDeseasesContainer}>
-          <Text style={styles.addressConsultation}>Address your Consultation </Text>
-          <View style={styles.DeseasesContainer}>
-            <View style={styles.subDeseasesContainer}>
-              <View>
-                <Text>Unknown</Text>
-              </View>
-              <View>
-                <Text>Respiratory</Text>
-              </View>
-              <View>
-                <Text>Med. Interne</Text>
-              </View>
-              <View>
-                <Text>Pediatry</Text>
-              </View>
-            </View>
-            <View style={styles.ViewAll}>
-              <Text>View All</Text>
-            </View>
-          </View>
-        </View>
-
+          <ConsultationOptions onOptionSelected={handleOptionSelected} />
         <View>
           <TouchableOpacity onPress={navigateToBack} style={styles.backButton}>
             <AntDesign name="arrowleft" style={styles.backButtonText} />
-            <Text style={styles.headerIllness}>Internal Medicine</Text>
+            <Text style={styles.headerIllness}>Thorax</Text>
           </TouchableOpacity>
           <View style={styles.headerContainer}>
             <View>
               <Image source={require("../assets/NeckChest.png")}  style={styles.NeckChestImage}/>
             </View>
             <View>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Liver.jpg")} style={styles.partBodyImage}/>
+            <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Chest')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/chest.png")} style={styles.partBodyImage} />
                 </View>
-                <Text style={styles.detailOptionText}>Liver</Text>
+                <Text style={styles.detailOptionText}>Chest</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Spleen.png")} style={styles.partBodyImage}/>
+              <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Neck-pain')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/neck-pains.png")} style={styles.partBodyImage} />
                 </View>
-                <Text style={styles.detailOptionText}>Pancreas</Text>
+                <Text style={styles.detailOptionText}>Neck pain</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Intestin.png")} style={styles.partBodyImage}/>
+              <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Heart')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/heart.png")} style={styles.partBodyImage} />
                 </View>
-                <Text style={styles.detailOptionText}>Intestin</Text>
+                <Text style={styles.detailOptionText}>Heart</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Stomach.png")} style={styles.partBodyImage}/>
+              <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Shoulder')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/shouder.png")} style={styles.partBodyImage} />
                 </View>
-                <Text style={styles.detailOptionText}>Stomach</Text>
+                <Text style={styles.detailOptionText}>Shoulder</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Kidneys.png")} style={styles.partBodyImage}/>
-                </View>
-                <Text style={styles.detailOptionText}>Kidney</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption} onPress={NavigateConsultation}>
-                <View>
-                  <Image source={require("../assets/Lungs.png")} style={styles.partBodyImage}/>
+              <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Lungs')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/lungss.png")} style={styles.partBodyImage} />
                 </View>
                 <Text style={styles.detailOptionText}>Lungs</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.Others}>
-                <Text style={styles.othersText}>Others</Text>
+              <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Breathing-problems')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/breathing-problem.png")} style={styles.partBodyImage} />
+                </View>
+                <Text style={styles.detailOptionText}>Breathing problems</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.detailOption} onPress={() => navigateToConsultation('Skin-rashes')}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/skinonneck.png")} style={styles.partBodyImage} />
+                </View>
+                <Text style={styles.detailOptionText}>Skin rashes</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -184,6 +179,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 10,
     alignItems: "center",
+    
   },
   detailOptionText: {},
   DeseasesContainer: {
@@ -248,10 +244,19 @@ const styles = StyleSheet.create({
     color: "#93BD68",
   },
   partBodyImage:{
-    width:39,
-    height:39,
+    width:30,
+    height:30,
     objectFit:"contain"
-  }
+  },
+  circleImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,  
+    borderColor: 'grey',
+    borderWidth: 0.5,
+    justifyContent: 'center',  
+    alignItems: 'center',       
+  },
 
 });
 

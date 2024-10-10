@@ -5,6 +5,10 @@ import Header1 from "../ReusableComponent/Header1";
 import BottomTabs1 from "../ReusableComponent/BottomTabs1";
 import { useNavigation } from "@react-navigation/native";
 import {NavigationProps} from "../../(app)/types"
+import ConsultationOptions from "./ConsultationOptions";
+
+
+
 const ReproductiveOrgan = () => {
   const navigation = useNavigation<NavigationProps>()
 
@@ -13,79 +17,78 @@ const ReproductiveOrgan = () => {
   navigation.navigate("ChatBoxConsultationBodyImagemapping");
   };
 
+  const navigateToConsultation = (bodyPart: String) => {
+    navigation.navigate("Consultation", { selectedBodyPart: bodyPart });
+  };
 
-  return (
+  const handleOptionSelected = (option) => {
+    navigation.navigate("Consultation", {
+      selectedConsultation: {
+        title: option.fullName,
+        image: option.image
+      }
+    });
+  };
+
+
+return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Header1/>
-
-
-        <View style={styles.SupDeseasesContainer}>
-          <Text style={styles.addressConsultation}>Address your Consultation </Text>
-          <View style={styles.DeseasesContainer}>
-            <View style={styles.subDeseasesContainer}>
-              <View>
-                <Text>Unknown</Text>
-              </View>
-              <View>
-                <Text>Respiratory</Text>
-              </View>
-              <View>
-                <Text>Med. Interne</Text>
-              </View>
-              <View>
-                <Text>Pediatry</Text>
-              </View>
-            </View>
-            <View style={styles.ViewAll}>
-              <Text>View All</Text>
-            </View>
-          </View>
-        </View>
-
+          <ConsultationOptions onOptionSelected={handleOptionSelected} />
         <View>
           <TouchableOpacity onPress={navigateToBack} style={styles.backButton}>
             <AntDesign name="arrowleft" style={styles.backButtonText} />
-            <Text style={styles.headerIllness}>Internal Medicine</Text>
+            <Text style={styles.headerIllness}>Pelvis</Text>
           </TouchableOpacity>
           <View style={styles.headerContainer}>
             <View>
               <Image source={require("../assets/ReproductiveOrgan.png")} />
             </View>
             <View>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Liver.jpg")} />
+              <TouchableOpacity onPress={() => navigateToConsultation('Urinary Problem')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/pee.png")} />
                 </View>
-                <Text style={styles.detailOptionText}>Liver</Text>
+                <Text style={styles.detailOptionText}>Urinary Problem</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Spleen.png")} />
+              <TouchableOpacity onPress={() => navigateToConsultation('Reproductive Health')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/Reproductive-Health.png")} />
                 </View>
-                <Text style={styles.detailOptionText}>Pancreas</Text>
+                <Text style={styles.detailOptionText}>Reproductive Health</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Intestin.png")} />
+              <TouchableOpacity onPress={() => navigateToConsultation('Lower Back')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/Lower-Back.png")} />
                 </View>
-                <Text style={styles.detailOptionText}>Intestin</Text>
+                <Text style={styles.detailOptionText}>Lower Back</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Stomach.png")} />
+              <TouchableOpacity onPress={() => navigateToConsultation('Bladder')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/bladder.png")} />
                 </View>
-                <Text style={styles.detailOptionText}>Stomach</Text>
+                <Text style={styles.detailOptionText}>Bladder</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.detailOption}>
-                <View>
-                  <Image source={require("../assets/Kidneys.png")} />
+              <TouchableOpacity onPress={() => navigateToConsultation('Kidney')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/Kidney.png")} />
                 </View>
                 <Text style={styles.detailOptionText}>Kidney</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.Others}>
-                <Text style={styles.othersText}>Others</Text>
+              <TouchableOpacity onPress={() => navigateToConsultation('Anal problem')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/anus.png")} />
+                </View>
+                <Text style={styles.detailOptionText}>Anal problem</Text>
               </TouchableOpacity>
+              
+              <TouchableOpacity onPress={() => navigateToConsultation('Pelvic Pain')} style={styles.detailOption}>
+                <View style={styles.circleImage}>
+                  <Image source={require("../assets/Pelvic-Pain.png")} />
+                </View>
+                <Text style={styles.detailOptionText}>Pelvic Pain</Text>
+              </TouchableOpacity >
             </View>
           </View>
         </View>
@@ -179,6 +182,15 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 10,
     alignItems: "center",
+  },
+  circleImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,  
+    borderColor: 'grey',
+    borderWidth: 0.5,
+    justifyContent: 'center',  
+    alignItems: 'center',       
   },
   detailOptionText: {},
   DeseasesContainer: {

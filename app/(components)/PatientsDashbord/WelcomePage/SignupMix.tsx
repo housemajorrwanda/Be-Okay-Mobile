@@ -10,6 +10,9 @@ const SignupMix = () => {
   const navigateToJoin=()=>{
     navigation.navigate("Join");
   }
+  const navigateToDoctorLoginPage=()=>{
+    navigation.navigate("PatientsDashboard");
+  }
   return (
     <View style={Styles.signupMixContainer}>
       <View style={Styles.WelcomeText}>
@@ -45,7 +48,7 @@ const SignupMix = () => {
           </View>
           <View style={Styles.alreadyhaveanAccount}>
             <Text style={Styles.haveanaccount}>Already have an account?</Text>
-            <Pressable>
+            <Pressable onPress={navigateToDoctorLoginPage}>
               <Text style={Styles.login}>LOG IN</Text>
             </Pressable>
           </View>

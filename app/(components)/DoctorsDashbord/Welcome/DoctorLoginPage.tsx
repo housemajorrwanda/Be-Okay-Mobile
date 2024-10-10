@@ -137,7 +137,9 @@ const DoctorLoginPage = () => {
           </Text>
         </View>
         <View style={styles.loginContainer}>
-          <Text style={styles.loginTitle}>LOG IN</Text>
+          <Pressable onPress={navigateToPatientsDashbord}>
+            <Text style={styles.loginTitle}>LOG IN</Text>
+          </Pressable>
           <Pressable style={styles.signupButton} onPress={navigateToSignup}>
             <Text style={styles.signupText}>
               Don't have an account? Sign UP

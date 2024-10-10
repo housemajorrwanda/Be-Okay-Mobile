@@ -10,15 +10,64 @@ import {
   Alert
 } from "react-native";
 import BottomTabs1 from "../ReusableComponent/BottomTabs1";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute, RouteProp} from "@react-navigation/native";
 import {NavigationProps} from "../../(app)/types"
 import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ConsultationOptions from "./ConsultationOptions";
+
+
+type ConsultationParams = {
+  selectedBodyPart?: string;
+  selectedConsultation?: {
+    title: string;
+    image: any;  
+  };
+};
+
+type ConsultationScreenRouteProp = RouteProp<Record<string, ConsultationParams>, string>;
+
+
+
 const Consultation = () => {
   const navigation = useNavigation<NavigationProps>()
+  
+  const route = useRoute<ConsultationScreenRouteProp>();
+  const { selectedBodyPart, selectedConsultation } = route.params || {};
+
 
   const [activeTab, setActiveTab] = useState("Consultation");
   const [description, setDescription] = useState("");
+
+  const consultationOptions = [
+    { shortName: "General", fullName: "General Medicine", image: require("../assets/Consultation/medicine.png") },
+    { shortName: "Mental", fullName: "Mental Health", image: require("../assets/Consultation/alzeimer.png") },
+    { shortName: "Fertility", fullName: "Fertility Counseling", image: require("../assets/Consultation/pregnancy-virus.png") },
+    { shortName: "STD's", fullName: "STD's", image: require("../assets/Consultation/sex-problem.png") },
+    { shortName: "Pediatric", fullName: "Pediatric Medicine", image: require("../assets/Consultation/pediatric-surgery.png") },
+    { shortName: "Gynecology", fullName: "Gynecology", image: require("../assets/Consultation/Gynecology.png") },
+    { shortName: "Chronic", fullName: "Chronic illness", image: require("../assets/Consultation/awareness.png") },
+    { shortName: "Intestine", fullName: "Intestine Medicine", image: require("../assets/Consultation/intestine.png") },
+  ];
+
+  const handleOptionSelect = (option: { shortName: string, fullName: string, image: any }) => {
+    navigation.navigate("Consultation", {
+      selectedConsultation: {
+        title: option.fullName,
+        image: option.image
+      }
+    });
+  };
+
+  const handleOptionSelected = (option) => {
+    navigation.navigate("Consultation", {
+      selectedConsultation: {
+        title: option.fullName,
+        image: option.image
+      }
+    });
+  };
+  
 
   const navigateToBack = () => {
     navigation.navigate("ChatBoxConsultationBodyImagemapping");
@@ -43,9 +92,245 @@ const Consultation = () => {
     }
   };
 
+  const getBodyPartImage = () => {
+    if(selectedBodyPart) {
+    switch (selectedBodyPart) {
+      case 'eye':
+        return require("../assets/eye.png");
+      case 'mouth':
+        return require("../assets/Mouth.png");
+      case 'teeth':
+        return require("../assets/teeth.png");
+      case 'tongue':
+        return require("../assets/tongue.png");
+      case 'ear':
+        return require("../assets/ear.png");
+      case 'nose':
+        return require("../assets/nose.png");
+      case 'facial':
+        return require("../assets/facial.png");
+      case 'head':
+        return require("../assets/relatedHead.png");
+      case 'Lung':
+        return require("../assets/Lung.png");
+
+         // Trunk-related parts
+      case 'Chest':
+        return require("../assets/chest.png");   
+      case 'Neck-pain':
+        return require("../assets/neck-pains.png");
+      case 'Heart':
+        return require("../assets/heart.png");
+      case 'Shoulder':
+        return require("../assets/shouder.png");     
+      case 'Lungs':
+        return require("../assets/lungss.png");
+      case 'Breathing-problems':
+        return require("../assets/breathing-problem.png");
+      case 'Skin-rashes':
+        return require("../assets/skinonneck.png");
+    
+
+      // reproductive organ
+      case 'Urinary Problem':
+        return require("../assets/pee.png");   
+      case 'Reproductive Health':
+       return require("../assets/Reproductive-Health.png");
+      case 'Lower Back':
+       return require("../assets/Lower-Back.png");     
+      case 'Bladder':
+        return require("../assets/bladder.png");      
+      case 'Kidney':
+        return require("../assets/Kidney.png");   
+      case 'Anal problem':
+        return require("../assets/anus.png");
+      case 'Pelvic Pain':
+        return require("../assets/Pelvic-Pain.png");  
+
+
+      //Right Arm
+
+      // case 'Right Injury':
+      // case 'Right Skin illness':
+      // case 'Right Bursitis':
+      // case 'Right others':
+      //   return require("../assets/RightArm.png"); 
+      
+      //Left arm
+      case 'Right Injury':
+            return require("../assets/Injury-arm.png"); 
+        case 'Right elbow injury':
+            return require("../assets/elbow.png");
+        case 'Right Elbow Pain':
+            return require("../assets/elbow-pain.png");  
+        case 'Right Skin Rashes':
+            return require("../assets/skinrashes.png"); 
+        
+     
+       //Left leg
+       case 'Left leg Injury':
+        case 'Left leg Skin illness':
+        case 'Left leg Bursitis':
+        case 'Left leg others':
+            return require("../assets/LeftLeg.png");    
+
+       //RIGHT leg
+       case 'Right leg Injury':
+            return require("../assets/Injury-arm.png"); 
+        case 'Right leg pain':
+            return require("../assets/leg-pain.png");
+        case 'Right leg skin':
+            return require("../assets/skinleg.png");  
+        case 'Right leg knee pain':
+            return require("../assets/knee-pain.png"); 
+        case 'Right leg foot & ankle':
+            return require("../assets/foot.png");   
+      //pelvic part
+    case 'Chest':
+        return require("../assets/chest.png"); 
+    case 'Right leg pain':
+        return require("../assets/leg-pain.png");
+    case 'Neck':
+        return require("../assets/neck.png");  
+    case 'Lower Back':
+        return require("../assets/Lower-shoulder.png"); 
+    case 'shoulder':
+        return require("../assets/shouder.png");  
+    case 'Abdomen':
+        return require("../assets/abs.png");   
+    case 'Intestinal':
+        return require("../assets/intestine.png");  
+    case 'Skin rashes':
+        return require("../assets/rashes.png");      
+      default:
+        return require("../assets/Lung.png");
+    }
+   } else if (selectedConsultation) {
+     return selectedConsultation.image;
+   }
+      return require("../assets/Lung.png");
+  };
+
+  const getBodyPartName = () => {
+    if (selectedBodyPart){
+    switch (selectedBodyPart) {
+      case 'eye':
+        return "Eyes";
+      case 'mouth':
+        return "Mouth";
+      case 'teeth':
+        return "Teeth";  
+      case 'tongue':
+        return "Tongue";
+      case 'ear':
+        return "Ears";
+      case 'nose':
+        return "Nose";
+      case 'facial':
+        return "Facial skincare";
+      case 'head':
+        return "Head Related";
+      case 'lungs':
+        return "Lungs";
+
+         // Trunk-related parts
+      case 'Chest':
+        return "Chest";   
+      case 'Neck-pain':
+        return "Neck pain";  
+      case 'Heart':
+        return "Heart";
+      case 'Shoulder':
+        return "Shoulder";
+      case 'Lungs':
+        return "Lungs";
+      case 'Breathing-problems':
+        return "Breathing problems";
+      case 'Skin-rashes':
+        return "Skin rashes";  
+      //Right arm
+      case 'Right Injury':
+        return 'Injury';
+      case 'Right elbow injury':
+        return 'Elbow Injury';
+      case 'Right Elbow Pain':
+          return 'Elbow Pain';
+      case 'Right Skin Rahes':
+        return "Skin Rashes";
+      
+      case 'Chest':
+        return 'Chest';  
+      case 'Abdomen':
+        return 'Abdomen';  
+      case 'Intestinal':
+        return 'Intestinal';    
+      case 'Private':
+        return 'Private parts';
+      case 'Skin rashes':
+        return 'Skin rashes';
+        
+      
+      //Left arm
+      case 'Left Injury':
+        return 'Injury';
+      case 'Left Skin illness':
+        return 'Skin illness';
+      case 'Left Bursitis':
+          return 'Bursitis';
+      case 'Left other':
+        return "Other"; 
+
+      //left leg
+      case 'Left leg Injury':
+        return 'Injury';
+      case 'Left leg Skin illness':
+        return 'Leg pain';
+      case 'Left leg Bursitis':
+          return 'Bursitis';
+      case 'Left leg other':
+        return "Other";  
+
+      //Right Leg  
+      case 'Right leg Injury':
+        return 'Injury';
+      case 'Right leg pain':
+        return 'Leg pain';
+      case 'Right leg skin':
+          return 'Skin';
+      case 'Right leg knee pain':
+        return "Knee Pain";
+      case 'Right leg foot & ankle':
+        return "Foot & Ankle";  
+      
+      //pelvic
+      case 'Urinary Problem':
+        return 'Urinary Problem';
+      case 'Reproductive Health':
+        return 'Reproductive Health';
+      case 'Lower Back':
+          return 'Lower Back';
+      case 'Bladder':
+        return "Bladder";
+      case 'Kidney':
+        return "Kidney";   
+      case 'Anal problem':
+          return 'Anal problem';
+      case 'Pelvic Pain':
+        return "Pelvic Pain";
+        
+      default:
+        return "Others";  
+    }
+   }else if (selectedConsultation) {
+     return selectedConsultation.title;
+   }
+   return "Others"
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        
         <View style={styles.header}>
           <View style={styles.checkProfileConatiner}>
             <Image
@@ -73,39 +358,20 @@ const Consultation = () => {
             <AntDesign name="arrowleft" style={styles.backButtonText} />
             <Text style={styles.headerIllness}>Consult with Be Okay</Text>
           </TouchableOpacity>
-          <View>
+          <View style={styles.wetakecarecontainer}>
             <Text style={styles.wetakecare}>
               We take care of your health as is variable to you!
             </Text>
           </View>
-
-          <View style={styles.SupDeseasesContainer}>
-            <Text style={styles.addressConsultation}>
-              Address your Consultation{" "}
-            </Text>
-            <View style={styles.DeseasesContainer}>
-              <View style={styles.subDeseasesContainer}>
-                <TouchableOpacity>
-                  <Text>Unknown</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>Respiratory</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>Med. Interne</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
+            <ConsultationOptions onOptionSelected={handleOptionSelected} />
           <View>
             <Text>Please select</Text>
             <View style={styles.LungContainer}>
-              <View>
-                <Image source={require("../assets/Lung.png")} />
+              <View style={styles.circleImage}>
+                <Image source={getBodyPartImage()} style={styles.bodyPartImage} />
               </View>
-              <View>
-                <Text style={styles.Lungs}>Lungs</Text>
+              <View style={styles.centerText}>
+                <Text style={styles.Lungs}>{getBodyPartName()}</Text>
               </View>
             </View>
             <View>
@@ -134,6 +400,19 @@ const Consultation = () => {
 export default Consultation;
 
 const styles = StyleSheet.create({
+  
+  bodyPartImage: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
+  },
+  centerText:{
+    left: 15,
+    top: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  
+  },
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
@@ -307,12 +586,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     gap: 2,
   },
+  wetakecarecontainer:{
+     marginBottom:-50,
+  },
   wetakecare: {
     width: "50%",
     color: "#7E7E7E",
     fontWeight: "regular",
     fontSize: 12,
     lineHeight: 15,
+    marginBottom: -90,
   },
   ContentContainer: {
     padding: 30,
@@ -327,7 +610,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   Lungs: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "regular",
     marginBottom: 50,
   },
@@ -355,4 +638,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
   },
+  circleImage:{
+    width: 80,
+    height: 80,
+    borderRadius: 40,  
+    borderColor: 'grey',
+    borderWidth: 0.5,
+    justifyContent: 'center',  
+    alignItems: 'center', 
+  }
 });

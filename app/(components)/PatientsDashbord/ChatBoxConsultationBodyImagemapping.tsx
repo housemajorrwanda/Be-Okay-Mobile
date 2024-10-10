@@ -17,16 +17,25 @@ import Header1 from "../ReusableComponent/Header1";
 import BottomTabs1 from "../ReusableComponent/BottomTabs1";
 import { useNavigation } from "@react-navigation/native";
 import {NavigationProps} from "../../(app)/types";
+
+
+export type ConsultationItem = {
+  title: string;
+  image: any; 
+};
+
 const MainBodyMapPage = () => {
   const navigation = useNavigation<NavigationProps>()
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedPart, setSelectedPart] = useState(null);
   const [activeTab, setActiveTab] = useState("Home");
   const [modalVisible, setModalVisible] = useState(false);
+
   const handleViewAllClick = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  
   const handleOptionSelect = (option: string) => {
     setSelectedPart(option);
     switch (option) {
@@ -66,53 +75,72 @@ const MainBodyMapPage = () => {
     }
   };
 
+  const consultationOptions = [
+    { shortName: "General", fullName: "General Medicine", image: require("../assets/Consultation/medicine.png") },
+    { shortName: "Mental", fullName: "Mental Health", image: require("../assets/Consultation/alzeimer.png") },
+    { shortName: "Fertility", fullName: "Fertility Counseling", image: require("../assets/Consultation/pregnancy-virus.png")},
+    { shortName: "STD's", fullName: "STD's", image: require("../assets/Consultation/sex-problem.png") },
+    { shortName: "Pediatric", fullName: "Pediatric Medicine", image: require("../assets/Consultation/pediatric-surgery.png")},
+    { shortName: "Gynecology", fullName: "Gynecology", image: require("../assets/Consultation/Gynecology.png") },
+    { shortName: "Chronic", fullName: "Chronic illness", image: require("../assets/Consultation/awareness.png")},
+    { shortName: "Intestine", fullName: "Intestine Medicine", image: require("../assets/Consultation/intestine.png") },
+  ];
+
+  const handleOptionSelected = (option: { shortName: string, fullName: string, image: any }) => {
+    navigation.navigate("Consultation", {
+      selectedConsultation: {
+        title: option.fullName,
+        image: option.image
+      }
+    });
+  };
+
 
   const consultationData = [
     {
-      title: "Alzheimer",
+      title: "General Medicine",
+      image: require("../assets/Consultation/medicine.png"),
+    },
+    {
+      title: "Mental Health",
       image: require("../assets/Consultation/alzeimer.png"),
     },
     {
-      title: "Awareness",
-      image: require("../assets/Consultation/awareness.png"),
+      title: "Fertility Counseling",
+      image: require("../assets/Consultation/pregnancy-virus.png"),
+    },
+    {
+      title: "STD's",
+      image: require("../assets/Consultation/sex-problem.png"),
+    },
+    {
+      title: "Pediatric Medecine",
+      image: require("../assets/Consultation/pediatric-surgery.png"),
     },
     {
       title: "Gynecology",
       image: require("../assets/Consultation/Gynecology.png"),
     },
+    {  
+      title: "Chronic illness",
+      image: require("../assets/Consultation/awareness.png"),
+    },
+
     {
-      title: "Intestine",
+      title: "Intestine Medicine",
       image: require("../assets/Consultation/intestine.png"),
     },
-    {
-      title: "Medicine",
-      image: require("../assets/Consultation/medicine.png"),
-    },
-    {
-      title: "Pediatric Surgery",
-      image: require("../assets/Consultation/pediatric-surgery.png"),
-    },
-    {
-      title: "Pregnancy Virus",
-      image: require("../assets/Consultation/pregnancy-virus.png"),
-    },
-    {
-      title: "Sex Problem",
-      image: require("../assets/Consultation/sex-problem.png"),
-    },
-    {
-      title: "Sex Problem",
-      image: require("../assets/Consultation/sex-problem.png"),
-    },
-    {
-      title: "Sex Problem",
-      image: require("../assets/Consultation/sex-problem.png"),
-    },
-    {
-      title: "Sex Problem",
-      image: require("../assets/Consultation/sex-problem.png"),
-    },
+  
   ];
+
+ 
+  const navigateToConsultation = (selection: { bodyPart?: string, consultationItem?: ConsultationItem }) => {
+    navigation.navigate("Consultation", { 
+      selectedBodyPart: selection.bodyPart,
+      selectedConsultation: selection.consultationItem 
+    });
+  };
+
 
   return (
     <View style={styles.container}>
@@ -141,88 +169,18 @@ const MainBodyMapPage = () => {
             <Text style={styles.AdressyourConsultation}>
               Address your Consultation
             </Text>
-            <View style={styles.ConsultationContainer}>
-              <TouchableOpacity
-                style={styles.adressCategory}
-                onPress={() => handleOptionSelect("Unknown")}
-              >
-                <Text
-                  style={[
-                    styles.adressCategoryText,
-                    selectedPart === "Unknown" && styles.selectedCategoryText,
-                  ]}
-                >
-                  Unknown
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.adressCategory}
-                onPress={() => handleOptionSelect("Respiratory")}
-              >
-                <Text
-                  style={[
-                    styles.adressCategoryText,
-                    selectedPart === "Respiratory" &&
-                      styles.selectedCategoryText,
-                  ]}
-                >
-                  Respiratory
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.adressCategory}
-                onPress={() => handleOptionSelect("Head")}
-              >
-                <Text
-                  style={[
-                    styles.adressCategoryText,
-                    selectedPart === "Head" && styles.selectedCategoryText,
-                  ]}
-                >
-                  Head
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.adressCategory}
-                onPress={() => handleOptionSelect("Trunk")}
-              >
-                <Text
-                  style={[
-                    styles.adressCategoryText,
-                    selectedPart === "Trunk" && styles.selectedCategoryText,
-                  ]}
-                >
-                  Trunk
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.adressCategory}
-                onPress={() => handleOptionSelect("LeftLeg")}
-              >
-                <Text
-                  style={[
-                    styles.adressCategoryText,
-                    selectedPart === "LeftLeg" && styles.selectedCategoryText,
-                  ]}
-                >
-                  Left Leg
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.adressCategory}
-                onPress={() => handleOptionSelect("RightLeg")}
-              >
-                <Text
-                  style={[
-                    styles.adressCategoryText,
-                    selectedPart === "RightLeg" && styles.selectedCategoryText,
-                  ]}
-                >
-                  Right Leg
-                </Text>
-              </TouchableOpacity>
-            </View>
-
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.DeseasesContainer}>
+              {consultationOptions.map((option, index) => (
+                  <TouchableOpacity 
+                    key={index} 
+                    style={styles.optionButton}
+                    onPress={() => handleOptionSelected(option)}
+                  >
+                    <Text style={styles.optionText}>{option.shortName}</Text>
+                  </TouchableOpacity>
+                ))}
+            </ScrollView>
+            
             <TouchableOpacity
               style={styles.viewAllContainer}
               onPress={() => setModalVisible(true)}
@@ -320,12 +278,19 @@ const MainBodyMapPage = () => {
             <ScrollView>
               <View style={styles.gridContainer}>
                 {consultationData.map((item, index) => (
-                  <View key={index} style={styles.gridItem}>
-                    <View style={styles.imageLogo}>
-                      <Image source={item.image} style={styles.image} />
-                    </View>
-                    <Text style={styles.title}>{item.title}</Text>
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.gridItem}
+                    onPress={() => {
+                      navigateToConsultation({ consultationItem: item });
+                      setModalVisible(false);
+                  }}
+                >
+                  <View style={styles.imageLogo}>
+                    <Image source={item.image} style={styles.image} />
                   </View>
+                  <Text style={styles.title}>{item.title}</Text>
+                </TouchableOpacity>
                 ))}
               </View>
             </ScrollView>
@@ -383,6 +348,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
+    top:-10,
   },
   gridItem: {
     width: "30%",
@@ -474,7 +440,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: "70%",
-    height: height * 0.5,
+    height: height * 0.52,
     backgroundColor: "#D9D9D9",
     padding: 5,
     paddingTop: 5,
@@ -504,10 +470,10 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   ConsultationContainer: {
-    display: "flex",
+    // display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 20,
+    // justifyContent: "space-between",
+    paddingLeft: 0,
     marginTop: 5,
   },
   AdressyourConsultation: {
@@ -517,19 +483,22 @@ const styles = StyleSheet.create({
   },
   adressCategory: {
     padding: 2,
-    paddingRight: 0,
+    paddingRight: 10,
   },
   adressCategoryText: {
     color: "#5C5C5C",
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "regular",
+    marginLeft: 12,
   },
   viewAllContainer: {
     alignItems: "flex-end",
+    
   },
   viewAllContainerText: {
-    fontSize: 10,
-    fontWeight: "regular",
+    paddingBottom: 10,
+    fontSize: 13,
+    fontWeight: "bold",
     marginTop: 2,
   },
   dropdown: {
@@ -649,6 +618,21 @@ const styles = StyleSheet.create({
   },
   activeTabText: {
     color: "#93BD68",
+  },
+  DeseasesContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  optionButton: {
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    marginRight: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 20,
+  },
+  optionText: {
+    fontSize: 14,
+    color: '#333',
   },
 });
 

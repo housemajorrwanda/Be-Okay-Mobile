@@ -11,7 +11,7 @@ const Join = () => {
 
   }
   const navigateToJoin=()=>{
-    navigation.navigate("PatientNormalSignUp")
+    navigation.navigate("PatientNormalSignUp")  
   }
   return (
     <View style={Styles.signupMixContainer}>

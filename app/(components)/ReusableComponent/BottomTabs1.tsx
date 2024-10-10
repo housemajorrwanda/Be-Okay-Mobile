@@ -73,7 +73,7 @@ const BottomTabs1 = ({ activeTab }: { activeTab: string }) => {
           onPress={() => handleTabPress("Emergency", "Emergency")}
         >
           <Image
-            source={require("../assets/CarIcon.png")}
+            source={require("../assets/caricon.png")}
             style={styles.imageIcon}
           />
           <Text
