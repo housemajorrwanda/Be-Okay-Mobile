@@ -12,6 +12,9 @@ const Checkup = () => {
   const navigateToBack = () => {
    navigation.navigate("ChatBoxConsultationBodyImagemapping");
   };
+  const navigateToPart = () => {
+    navigation.navigate("ChatBoxConsultationBodyImageMapping");
+  }
 
 
   return (
@@ -23,6 +26,9 @@ const Checkup = () => {
           <TouchableOpacity onPress={navigateToBack} style={styles.backButton}>
             <AntDesign name="arrowleft" style={styles.backButtonText} />
             <Text style={styles.headerIllness}>Checkup Page</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigateToPart}>
+
           </TouchableOpacity>
 
         </View>

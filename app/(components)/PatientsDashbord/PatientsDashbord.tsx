@@ -139,7 +139,7 @@ const PatientDashboard = () => {
                 </View>
               </View>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate("HomeCare")}>
+            <Pressable onPress={() => handlePress("HomeCare")}>
               <View style={styles.patientDataResultContainer}>
                 <Text style={styles.resultTitle}>Home care</Text>
                 <View style={styles.PatientDataGroup}>

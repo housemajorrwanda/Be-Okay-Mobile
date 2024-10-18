@@ -24,6 +24,14 @@ import ConsultationWithAI from '../(components)/PatientsDashbord/ConsultationWit
 import ConsultationWithDoctor from '../(components)/PatientsDashbord/ConsultationWithDoctor';
 import ConsultationWithHomecareForm from '../(components)/PatientsDashbord/ConsultationWithHomecareForm';
 import ReproductiveOrgan from '../(components)/PatientsDashbord/ReproductiveOrgan';
+import HomeCare from '../(components)/PatientsDashbord/HomeCare';
+import Hospitals from '../(components)/PatientsDashbord/Hospitals'
+import Emergency from '../(components)/PatientsDashbord/Emergency';
+import PatientsDashbord from '../(components)/PatientsDashbord/PatientsDashbord';
+import CheckSuport from '../(components)/PatientsDashbord/CheckSuport';
+import ConsultationTypeResult from '../(components)/PatientsDashbord/ConsultationTypeResult';
+import PatientBookDoctorAppointment from '../(components)/PatientsDashbord/PatientBookDoctorAppointment';
+
 
 
 
@@ -153,6 +161,46 @@ const AppNavigation: React.FC = () => {
           component={ReproductiveOrgan}
           options={{ headerShown: false }}
       />
+      <Stack.Screen
+          name="HomeCare"
+          component={HomeCare}
+          options={{ headerShown: false }}
+      />
+      <Stack.Screen
+          name="Hospitals"    
+          component={Hospitals}
+          options={{ headerShown: false }}
+      />
+      <Stack.Screen
+          name="Emergency"    
+          component={Emergency}
+          options={{ headerShown: false }}
+      />
+      <Stack.Screen
+          name="PatientsDashbord"    
+          component={PatientsDashbord}
+          options={{ headerShown: false }}
+      />
+      <Stack.Screen
+          name="ConsultationTypeResult"    
+          component={ConsultationTypeResult}
+          options={{ headerShown: false }}
+      />
+      <Stack.Screen
+          name="CheckSuport"    
+          component={CheckSuport}
+          options={{ headerShown: false }}
+      />
+      <Stack.Screen
+          name="PatientBookDoctorAppointment"    
+          component={PatientBookDoctorAppointment}
+          options={{ headerShown: false }}
+      />
+
+
+      
+      
+      
 
     </Stack.Navigator>
   );

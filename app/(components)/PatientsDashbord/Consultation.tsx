@@ -148,15 +148,7 @@ const Consultation = () => {
         return require("../assets/Pelvic-Pain.png");  
 
 
-      //Right Arm
-
-      // case 'Right Injury':
-      // case 'Right Skin illness':
-      // case 'Right Bursitis':
-      // case 'Right others':
-      //   return require("../assets/RightArm.png"); 
-      
-      //Left arm
+      //Right arm
       case 'Right Injury':
             return require("../assets/Injury-arm.png"); 
         case 'Right elbow injury':
@@ -166,6 +158,18 @@ const Consultation = () => {
         case 'Right Skin Rashes':
             return require("../assets/skinrashes.png"); 
         
+      
+        //Left arm
+        case 'Left Injury':
+          return require("../assets/Injury-arm.png"); 
+      case 'left elbow injury':
+          return require("../assets/elbow.png");
+      case 'left Elbow Pain':
+          return require("../assets/elbow-pain.png");  
+      case 'Left Skin Rashes':
+          return require("../assets/skinrashes.png"); 
+      
+         
      
        //Left leg
        case 'Left leg Injury':
@@ -184,24 +188,21 @@ const Consultation = () => {
         case 'Right leg knee pain':
             return require("../assets/knee-pain.png"); 
         case 'Right leg foot & ankle':
-            return require("../assets/foot.png");   
-      //pelvic part
-    case 'Chest':
-        return require("../assets/chest.png"); 
-    case 'Right leg pain':
-        return require("../assets/leg-pain.png");
-    case 'Neck':
-        return require("../assets/neck.png");  
-    case 'Lower Back':
-        return require("../assets/Lower-shoulder.png"); 
-    case 'shoulder':
-        return require("../assets/shouder.png");  
-    case 'Abdomen':
-        return require("../assets/abs.png");   
-    case 'Intestinal':
-        return require("../assets/intestine.png");  
-    case 'Skin rashes':
-        return require("../assets/rashes.png");      
+            return require("../assets/foot.png"); 
+
+      //stomach part
+    case 'stomach':
+        return require("../assets/Stomach.png"); 
+    case 'ribs':
+        return require("../assets/ribs.png");
+    case 'digestion-food':
+        return require("../assets/fast-food.png");  
+    case 'back pain':
+        return require("../assets/back pain.png"); 
+    case 'skin':
+        return require("../assets/skin.png");  
+    case 'Reproductive':
+        return require("../assets/reproductive.png");      
       default:
         return require("../assets/Lung.png");
     }
@@ -258,27 +259,39 @@ const Consultation = () => {
       case 'Right Skin Rahes':
         return "Skin Rashes";
       
-      case 'Chest':
-        return 'Chest';  
-      case 'Abdomen':
-        return 'Abdomen';  
-      case 'Intestinal':
-        return 'Intestinal';    
-      case 'Private':
-        return 'Private parts';
-      case 'Skin rashes':
-        return 'Skin rashes';
-        
+      case 'stomach':
+        return 'Stomach pain';  
+      case 'ribs':
+        return 'Ribs';  
+      case 'digestion-food':
+        return 'Food Poisoning';    
+      case 'back pain':
+        return 'Back Pain';
+      case 'skin':
+        return 'Skin';
+      case 'Reproductive':
+          return 'Reproduction health';  
       
+
       //Left arm
       case 'Left Injury':
         return 'Injury';
-      case 'Left Skin illness':
-        return 'Skin illness';
-      case 'Left Bursitis':
-          return 'Bursitis';
-      case 'Left other':
-        return "Other"; 
+      case 'left elbow injury':
+        return 'Elbow Injury';
+      case 'left Elbow Pain':
+          return 'Elbow Pain';
+      case 'Left Skin Rashes':
+        return "Skin Rashes"; 
+
+      //right arm
+      case 'Right Injury':
+        return 'Injury';
+      case 'Right elbow injury':
+        return 'Elbow Injury';
+      case 'Right Elbow Pain':
+          return 'Elbow Pain';
+      case 'Right Skin Rashes':
+        return "Skin Rashes";   
 
       //left leg
       case 'Left leg Injury':

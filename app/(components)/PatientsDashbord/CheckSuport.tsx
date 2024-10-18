@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header1 from "../ReusableComponent/Header1";
-import BottomTabs1 from "../ReusableComponent/BottomTabs1";
+import BottomTabs1 from "../ReusableComponent/BottomTabs1"; 
 const CheckSuport = () => {
   const [description, setDescription] = useState("");
   const [messages, setMessages] = useState([]);

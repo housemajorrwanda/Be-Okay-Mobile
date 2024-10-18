@@ -47,25 +47,25 @@ const RightArmPage = () => {
               <Image source={require("../assets/Leftarm.png")}/>
             </View>
             <View style={styles.detailOptionContainer}>
-              <TouchableOpacity onPress={() => navigateToConsultation('Right Injury')} style={styles.detailOption}>
+              <TouchableOpacity onPress={() => navigateToConsultation('Left Injury')} style={styles.detailOption}>
                  <View style={styles.circleImage}>
                         <Image source={require("../assets/Injury-arm.png")} style={styles.organImage} />
                   </View>
                 <Text style={styles.detailOptionText}>Injury</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigateToConsultation('Right elbow injury')} style={styles.detailOption}>
+              <TouchableOpacity onPress={() => navigateToConsultation('left elbow injury')} style={styles.detailOption}>
                   <View style={styles.circleImage}>
                         <Image source={require("../assets/elbow.png")} style={styles.organImage} />
                   </View>
                 <Text style={styles.detailOptionText}>Elbow Injury</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigateToConsultation('Right Elbow Pain')} style={styles.detailOption}>
+              <TouchableOpacity onPress={() => navigateToConsultation('left Elbow Pain')} style={styles.detailOption}>
                   <View style={styles.circleImage}>
                           <Image source={require("../assets/elbow-pain.png")} style={styles.organImage} />
                   </View>
                 <Text style={styles.detailOptionText}>Elbow Pain</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigateToConsultation('Right Skin Rashes')} style={styles.detailOption}>
+              <TouchableOpacity onPress={() => navigateToConsultation('Left Skin Rashes')} style={styles.detailOption}>
                   <View style={styles.circleImage}>
                         <Image source={require("../assets/skinrashes.png")} style={styles.organImage} />
                   </View>
