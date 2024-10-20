@@ -31,7 +31,7 @@ import PatientsDashbord from '../(components)/PatientsDashbord/PatientsDashbord'
 import CheckSuport from '../(components)/PatientsDashbord/CheckSuport';
 import ConsultationTypeResult from '../(components)/PatientsDashbord/ConsultationTypeResult';
 import PatientBookDoctorAppointment from '../(components)/PatientsDashbord/PatientBookDoctorAppointment';
-
+import SettingsScreen from '../(components)/PatientsDashbord/SettingsScreen';
 
 
 
@@ -196,9 +196,11 @@ const AppNavigation: React.FC = () => {
           component={PatientBookDoctorAppointment}
           options={{ headerShown: false }}
       />
-
-
-      
+      <Stack.Screen
+          name="SettingsScreen"    
+          component={SettingsScreen}
+          options={{ headerShown: false }} 
+      />
       
       
 

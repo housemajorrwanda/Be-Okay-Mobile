@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {NavigationProps} from "../../(app)/types"
+import SettingsScreen from "../PatientsDashbord/SettingsScreen";
+
 
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +19,9 @@ const Header1 = () => {
 
   const navigateToEditProfile = () => {
     navigation.navigate("EditProfile");
+  };
+  const navigateToSettings = () => {
+    navigation.navigate("SettingsScreen");
   };
 
   useEffect(() => {
@@ -81,7 +86,9 @@ const Header1 = () => {
           <TouchableOpacity onPress={navigateTCheckSupport}>
             <Image source={require("../assets/MessengerIcon.png")}/>
           </TouchableOpacity>
-          <Ionicons name="notifications-sharp" size={30} color="white" />
+          <TouchableOpacity onPress={navigateToSettings}>
+            <Ionicons name="settings-sharp" size={30} color="white" />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
